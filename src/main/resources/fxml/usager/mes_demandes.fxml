@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.usager.MesDemandesController"
+            prefWidth="1024" prefHeight="768"
+            style="-fx-background-color: #f0f2f5;">
+
+    <!-- ═══ HEADER ═══ -->
+    <top>
+        <VBox style="-fx-background-color: #1a2035; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0, 0, 2);">
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <padding><Insets top="14" right="24" bottom="14" left="24"/></padding>
+                <VBox spacing="2">
+                    <Label text="MES DEMANDES" textFill="white"
+                           style="-fx-font-weight: bold; -fx-font-size: 15px; -fx-letter-spacing: 1.5px;"/>
+                    <Label text="Suivi de vos demandes d'actes administratifs" textFill="#7986a8"
+                           style="-fx-font-size: 11px;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button onAction="#handleActualiser" text="↻  Actualiser"
+                        style="-fx-background-color: #2d3f54; -fx-text-fill: #c8d6e8;
+                               -fx-font-size: 12px; -fx-padding: 7 16 7 16;
+                               -fx-background-radius: 6; -fx-cursor: hand;"/>
+                <Button onAction="#handleRetour" text="← Retour"
+                        style="-fx-background-color: #2d3748; -fx-text-fill: #a0aec0;
+                               -fx-font-size: 12px; -fx-padding: 7 16 7 16;
+                               -fx-background-radius: 6; -fx-cursor: hand;"/>
+            </HBox>
+            <HBox prefHeight="3" style="-fx-background-color: linear-gradient(to right, #3182ce, #805ad5, #27ae60);"/>
+        </VBox>
+    </top>
+
+    <!-- ═══ CONTENU PRINCIPAL ═══ -->
+    <center>
+        <SplitPane dividerPositions="0.45"
+                   style="-fx-background-color: transparent; -fx-padding: 24;">
+
+            <!-- ═ PANNEAU GAUCHE : TABLE ═ -->
+            <VBox spacing="16"
+                  style="-fx-background-color: white; -fx-background-radius: 12;
+                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+                         -fx-padding: 24;">
+
+                <VBox spacing="4">
+                    <Label text="Liste de mes demandes"
+                           style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                    <Label text="Cliquez sur une ligne pour voir les détails"
+                           style="-fx-font-size: 11px; -fx-text-fill: #a0aec0;"/>
+                </VBox>
+                <Separator style="-fx-background-color: #edf2f7;"/>
+
+                <TableView fx:id="demandeTable" VBox.vgrow="ALWAYS"
+                           style="-fx-background-color: transparent; -fx-border-color: transparent;">
+                    <placeholder>
+                        <Label text="Aucune demande trouvée."
+                               style="-fx-text-fill: #a0aec0; -fx-font-size: 13px;"/>
+                    </placeholder>
+                    <columns>
+                        <TableColumn fx:id="demandeNumeroCol" text="N° Demande" prefWidth="130"/>
+                        <TableColumn fx:id="demandeTypeCol"   text="Type"       prefWidth="120"/>
+                        <TableColumn fx:id="demandeDateCol"   text="Date"       prefWidth="140"/>
+                        <TableColumn fx:id="demandeStatutCol" text="Statut"     prefWidth="110"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- ═ PANNEAU DROIT : DÉTAILS ═ -->
+            <VBox spacing="20"
+                  style="-fx-background-color: white; -fx-background-radius: 12;
+                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+                         -fx-padding: 24;">
+
+                <HBox alignment="CENTER_LEFT" spacing="8">
+                    <Label text="📋" style="-fx-font-size: 16px;"/>
+                    <Label text="Détails de la demande"
+                           style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                </HBox>
+                <Separator style="-fx-background-color: #edf2f7;"/>
+
+                <GridPane hgap="16" vgap="14">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" minWidth="120"/>
+                        <ColumnConstraints minWidth="200"/>
+                    </columnConstraints>
+
+                    <Label text="N° Demande :"
+                           style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #4a5568;"
+                           GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <Label fx:id="demandeNumeroDetailLabel"
+                           style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"
+                           GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                    <Label text="Type :"
+                           style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #4a5568;"
+                           GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <Label fx:id="demandeTypeDetailLabel"
+                           style="-fx-font-size: 13px; -fx-text-fill: #2d3748;"
+                           GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                    <Label text="Date :"
+                           style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #4a5568;"
+                           GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <Label fx:id="demandeDateDetailLabel"
+                           style="-fx-font-size: 13px; -fx-text-fill: #2d3748;"
+                           GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                    <Label text="Statut :"
+                           style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #4a5568;"
+                           GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                    <Label fx:id="demandeStatutDetailLabel"
+                           style="-fx-font-size: 13px; -fx-text-fill: #2d3748;"
+                           GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                    <Label text="Traitement :"
+                           style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #4a5568;"
+                           GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                    <Label fx:id="demandeTraitementLabel"
+                           style="-fx-font-size: 13px; -fx-text-fill: #2d3748;"
+                           GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                </GridPane>
+
+                <VBox spacing="6">
+                    <Label text="Motif :"
+                           style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #4a5568;"/>
+                    <TextArea fx:id="demandeMotifArea" editable="false" prefHeight="110" wrapText="true"
+                              style="-fx-background-color: #f7fafc; -fx-border-color: #e2e8f0;
+                                     -fx-border-radius: 6; -fx-background-radius: 6; -fx-font-size: 12px;"/>
+                </VBox>
+
+            </VBox>
+
+        </SplitPane>
+    </center>
+
+</BorderPane>

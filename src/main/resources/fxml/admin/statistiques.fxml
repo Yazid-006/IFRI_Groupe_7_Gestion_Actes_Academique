@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.chart.PieChart?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.admin.RapportController"
+            prefWidth="1024" prefHeight="768"
+            style="-fx-background-color: #f0f2f5;">
+
+    <!-- ═══ HEADER ═══ -->
+    <top>
+        <VBox style="-fx-background-color: #1a2035; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0, 0, 2);">
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <padding>
+                    <Insets top="14" right="24" bottom="14" left="24"/>
+                </padding>
+                <VBox spacing="2">
+                    <Label text="STATISTIQUES &amp; RAPPORTS"
+                           textFill="white"
+                           style="-fx-font-weight: bold; -fx-font-size: 15px;"/>
+                    <Label text="Analyse et export des données"
+                           textFill="#7986a8"
+                           style="-fx-font-size: 11px;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button onAction="#handleRetour"
+                        text="← Retour"
+                        style="-fx-background-color: #2d3748;
+                               -fx-text-fill: #a0aec0;
+                               -fx-font-size: 12px;
+                               -fx-padding: 7 16 7 16;
+                               -fx-background-radius: 6;
+                               -fx-cursor: hand;"/>
+            </HBox>
+            <HBox prefHeight="3" style="-fx-background-color: linear-gradient(to right, #3182ce, #805ad5, #e53e3e);"/>
+        </VBox>
+    </top>
+
+    <!-- ═══ CONTENU ═══ -->
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE"
+                 style="-fx-background-color: transparent; -fx-padding: 24;">
+
+            <!-- ─── Statistiques globales ─── -->
+            <Tab text="📊  Statistiques globales">
+                <ScrollPane fitToWidth="true"
+                            style="-fx-background: transparent; -fx-background-color: transparent;">
+                    <VBox spacing="20">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+
+                        <VBox spacing="3">
+                            <Label text="Vue d'ensemble"
+                                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                            <Label text="Statistiques globales du système"
+                                   style="-fx-font-size: 12px; -fx-text-fill: #718096;"/>
+                        </VBox>
+
+                        <!-- KPI Cards -->
+                        <HBox spacing="16">
+                            <VBox spacing="10" HBox.hgrow="ALWAYS"
+                                  style="-fx-background-color: white; -fx-background-radius: 12;
+                                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+                                         -fx-padding: 20;">
+                                <Label text="Total demandes" style="-fx-font-size: 12px; -fx-text-fill: #718096; -fx-font-weight: bold;"/>
+                                <Label fx:id="totalDemandesLabel" text="0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2d3748;"/>
+                                <HBox prefHeight="4" style="-fx-background-color: #3182ce; -fx-background-radius: 2;"/>
+                            </VBox>
+                            <VBox spacing="10" HBox.hgrow="ALWAYS"
+                                  style="-fx-background-color: white; -fx-background-radius: 12;
+                                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+                                         -fx-padding: 20;">
+                                <Label text="En attente" style="-fx-font-size: 12px; -fx-text-fill: #718096; -fx-font-weight: bold;"/>
+                                <Label fx:id="demandesEnAttenteLabel" text="0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2d3748;"/>
+                                <HBox prefHeight="4" style="-fx-background-color: #e67e22; -fx-background-radius: 2;"/>
+                            </VBox>
+                            <VBox spacing="10" HBox.hgrow="ALWAYS"
+                                  style="-fx-background-color: white; -fx-background-radius: 12;
+                                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+                                         -fx-padding: 20;">
+                                <Label text="Validées" style="-fx-font-size: 12px; -fx-text-fill: #718096; -fx-font-weight: bold;"/>
+                                <Label fx:id="demandesValideesLabel" text="0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2d3748;"/>
+                                <HBox prefHeight="4" style="-fx-background-color: #27ae60; -fx-background-radius: 2;"/>
+                            </VBox>
+                            <VBox spacing="10" HBox.hgrow="ALWAYS"
+                                  style="-fx-background-color: white; -fx-background-radius: 12;
+                                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+                                         -fx-padding: 20;">
+                                <Label text="Rejetées" style="-fx-font-size: 12px; -fx-text-fill: #718096; -fx-font-weight: bold;"/>
+                                <Label fx:id="demandesRejeteesLabel" text="0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2d3748;"/>
+                                <HBox prefHeight="4" style="-fx-background-color: #e53e3e; -fx-background-radius: 2;"/>
+                            </VBox>
+                            <VBox spacing="10" HBox.hgrow="ALWAYS"
+                                  style="-fx-background-color: white; -fx-background-radius: 12;
+                                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+                                         -fx-padding: 20;">
+                                <Label text="Total actes" style="-fx-font-size: 12px; -fx-text-fill: #718096; -fx-font-weight: bold;"/>
+                                <Label fx:id="totalActesLabel" text="0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2d3748;"/>
+                                <HBox prefHeight="4" style="-fx-background-color: #805ad5; -fx-background-radius: 2;"/>
+                            </VBox>
+                            <VBox spacing="10" HBox.hgrow="ALWAYS"
+                                  style="-fx-background-color: white; -fx-background-radius: 12;
+                                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+                                         -fx-padding: 20;">
+                                <Label text="Actes du mois" style="-fx-font-size: 12px; -fx-text-fill: #718096; -fx-font-weight: bold;"/>
+                                <Label fx:id="actesMoisLabel" text="0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2d3748;"/>
+                                <HBox prefHeight="4" style="-fx-background-color: #f39c12; -fx-background-radius: 2;"/>
+                            </VBox>
+                        </HBox>
+
+                        <!-- Graphique -->
+                        <VBox fx:id="chartContainer" spacing="12"
+                              style="-fx-background-color: white; -fx-background-radius: 12;
+                             -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+                             -fx-padding: 20;">
+                            <Label text="Répartition des actes par type"
+                                   style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                            <Separator style="-fx-background-color: #edf2f7;"/>
+                            <Label fx:id="chartPlaceholder" text="Aucune donnée disponible."
+                                   visible="false"
+                                   style="-fx-text-fill: #a0aec0; -fx-font-size: 13px; -fx-padding: 40 0 40 0;"/>
+                            <PieChart fx:id="actesParTypeChart" prefHeight="280" legendVisible="true"
+                                      style="-fx-background-color: transparent;"/>
+                        </VBox>
+
+                    </VBox>
+                </ScrollPane>
+            </Tab>
+
+            <!-- ─── Rapport périodique ─── -->
+            <Tab text="📅  Rapport périodique">
+                <ScrollPane fitToWidth="true"
+                            style="-fx-background: transparent; -fx-background-color: transparent;">
+                    <VBox spacing="20">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+
+                        <VBox spacing="3">
+                            <Label text="Rapport périodique"
+                                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                            <Label text="Analysez les données sur une période donnée"
+                                   style="-fx-font-size: 12px; -fx-text-fill: #718096;"/>
+                        </VBox>
+
+                        <!-- Filtre période -->
+                        <HBox alignment="CENTER_LEFT" spacing="12"
+                              style="-fx-background-color: white; -fx-background-radius: 12;
+                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+                                     -fx-padding: 16;">
+                            <Label text="Du" style="-fx-font-size: 13px; -fx-text-fill: #4a5568; -fx-font-weight: bold;"/>
+                            <DatePicker fx:id="dateDebutPicker" style="-fx-background-radius: 6;"/>
+                            <Label text="au" style="-fx-font-size: 13px; -fx-text-fill: #4a5568; -fx-font-weight: bold;"/>
+                            <DatePicker fx:id="dateFinPicker" style="-fx-background-radius: 6;"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button onAction="#handleGenererRapportPeriodique"
+                                    text="Générer le rapport"
+                                    style="-fx-background-color: #3182ce; -fx-text-fill: white;
+                                           -fx-font-size: 12px; -fx-font-weight: bold;
+                                           -fx-padding: 9 20 9 20; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                        </HBox>
+
+                        <!-- KPI période -->
+                        <HBox spacing="16">
+                            <VBox spacing="10" HBox.hgrow="ALWAYS"
+                                  style="-fx-background-color: white; -fx-background-radius: 12;
+                                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+                                         -fx-padding: 20;">
+                                <Label text="Demandes" style="-fx-font-size: 12px; -fx-text-fill: #718096; -fx-font-weight: bold;"/>
+                                <Label fx:id="periodeDemandesLabel" text="0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2d3748;"/>
+                                <HBox prefHeight="4" style="-fx-background-color: #3182ce; -fx-background-radius: 2;"/>
+                            </VBox>
+                            <VBox spacing="10" HBox.hgrow="ALWAYS"
+                                  style="-fx-background-color: white; -fx-background-radius: 12;
+                                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+                                         -fx-padding: 20;">
+                                <Label text="Validées" style="-fx-font-size: 12px; -fx-text-fill: #718096; -fx-font-weight: bold;"/>
+                                <Label fx:id="periodeValideesLabel" text="0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2d3748;"/>
+                                <HBox prefHeight="4" style="-fx-background-color: #27ae60; -fx-background-radius: 2;"/>
+                            </VBox>
+                            <VBox spacing="10" HBox.hgrow="ALWAYS"
+                                  style="-fx-background-color: white; -fx-background-radius: 12;
+                                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+                                         -fx-padding: 20;">
+                                <Label text="Rejetées" style="-fx-font-size: 12px; -fx-text-fill: #718096; -fx-font-weight: bold;"/>
+                                <Label fx:id="periodeRejeteesLabel" text="0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2d3748;"/>
+                                <HBox prefHeight="4" style="-fx-background-color: #e53e3e; -fx-background-radius: 2;"/>
+                            </VBox>
+
+                            <VBox spacing="10" HBox.hgrow="ALWAYS"
+                                  style="-fx-background-color: white; -fx-background-radius: 12;
+                                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+                                 -fx-padding: 20;">
+                                <Label text="Actes émis" style="-fx-font-size: 12px; -fx-text-fill: #718096; -fx-font-weight: bold;"/>
+                                <Label fx:id="periodeActesLabel" text="0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2d3748;"/>
+                                <HBox prefHeight="4" style="-fx-background-color: #805ad5; -fx-background-radius: 2;"/>
+                            </VBox>
+
+                        </HBox>
+
+                        <!-- Table détail -->
+                        <VBox spacing="12"
+                              style="-fx-background-color: white; -fx-background-radius: 12;
+                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+                                     -fx-padding: 20;">
+                            <Label text="Détail des actes par type"
+                                   style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                            <Separator style="-fx-background-color: #edf2f7;"/>
+                            <TableView fx:id="periodeTypeTable" prefHeight="200"
+                                       style="-fx-background-color: transparent;">
+                                <placeholder>
+                                    <Label text="Aucune donnée pour cette période."
+                                           style="-fx-text-fill: #a0aec0; -fx-font-size: 13px;"/>
+                                </placeholder>
+                                <columns>
+                                    <TableColumn fx:id="typeCol"  text="Type d'acte" maxWidth="500"/>
+                                    <TableColumn fx:id="countCol" text="Nombre"      maxWidth="500"/>
+                                </columns>
+                            </TableView>
+                        </VBox>
+
+                    </VBox>
+                </ScrollPane>
+            </Tab>
+
+            <!-- ─── Export ─── -->
+            <Tab text="📤  Export">
+                <ScrollPane fitToWidth="true"
+                            style="-fx-background: transparent; -fx-background-color: transparent;">
+                    <VBox spacing="20">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+
+                        <VBox spacing="3">
+                            <Label text="Export &amp; Impression"
+                                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                            <Label text="Générez et exportez vos rapports"
+                                   style="-fx-font-size: 12px; -fx-text-fill: #718096;"/>
+                        </VBox>
+
+                        <!-- Sélection type + génération -->
+                        <HBox alignment="CENTER_LEFT" spacing="12"
+                              style="-fx-background-color: white; -fx-background-radius: 12;
+                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+                                     -fx-padding: 16;">
+                            <Label text="Type de rapport :"
+                                   style="-fx-font-size: 13px; -fx-text-fill: #4a5568; -fx-font-weight: bold;"/>
+                            <ComboBox fx:id="rapportTypeCombo" prefWidth="220"
+                                      style="-fx-background-radius: 6;"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button onAction="#handleExporterRapport"
+                                    text="Générer"
+                                    style="-fx-background-color: #3182ce; -fx-text-fill: white;
+                                           -fx-font-size: 12px; -fx-font-weight: bold;
+                                           -fx-padding: 9 20 9 20; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                        </HBox>
+
+                        <!-- Zone texte -->
+                        <VBox spacing="12"
+                              style="-fx-background-color: white; -fx-background-radius: 12;
+                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+                                     -fx-padding: 20;">
+                            <Label text="Aperçu du rapport"
+                                   style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                            <Separator style="-fx-background-color: #edf2f7;"/>
+                            <TextArea fx:id="rapportTextArea"
+                                      prefHeight="260"
+                                      wrapText="true"
+                                      style="-fx-background-color: #f7fafc;
+                                             -fx-border-color: #e2e8f0;
+                                             -fx-border-radius: 8;
+                                             -fx-background-radius: 8;
+                                             -fx-font-size: 12px;"/>
+                        </VBox>
+
+                        <!-- Actions export -->
+                        <HBox spacing="12">
+                            <Button onAction="#handleExporterPDF"
+                                    text="📄 Exporter PDF"
+                                    style="-fx-background-color: #27ae60; -fx-text-fill: white;
+                                           -fx-font-size: 12px; -fx-font-weight: bold;
+                                           -fx-padding: 10 20 10 20; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                            <Button onAction="#handleImprimerRapport"
+                                    text="🖨 Imprimer"
+                                    style="-fx-background-color: #f39c12; -fx-text-fill: white;
+                                           -fx-font-size: 12px; -fx-font-weight: bold;
+                                           -fx-padding: 10 20 10 20; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                        </HBox>
+
+                    </VBox>
+                </ScrollPane>
+            </Tab>
+
+        </TabPane>
+    </center>
+
+</BorderPane>

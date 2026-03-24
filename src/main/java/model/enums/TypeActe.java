@@ -1,0 +1,12 @@
+package model.enums;
+
+public enum TypeActe {
+
+    CERTIFICAT_SCOLARITE,
+    ATTESTATION_TRAVAIL,
+    AUTORISATION,
+    COPIE_ACTE,
+    CERTIFICAT_MEDICAL,
+    ATTESTATION_DOMICILE
+
+}

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.agent.RechercheController"
+            prefWidth="1024" prefHeight="768"
+            style="-fx-background-color: #f0f2f5;">
+
+    <top>
+        <VBox style="-fx-background-color: #1a2035; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0, 0, 2);">
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <padding><Insets top="14" right="24" bottom="14" left="24"/></padding>
+                <VBox spacing="2">
+                    <Label text="RECHERCHE" textFill="white" style="-fx-font-weight: bold; -fx-font-size: 15px;"/>
+                    <Label text="Recherche d'actes et de demandes" textFill="#7986a8" style="-fx-font-size: 11px;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button onAction="#handleRetour" text="← Retour" style="-fx-background-color: #2d3748; -fx-text-fill: #a0aec0; -fx-font-size: 12px; -fx-padding: 7 16 7 16; -fx-background-radius: 6; -fx-cursor: hand;"/>
+            </HBox>
+            <HBox prefHeight="3" style="-fx-background-color: linear-gradient(to right, #3182ce, #805ad5, #e53e3e);"/>
+        </VBox>
+    </top>
+
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE" style="-fx-background-color: transparent; -fx-padding: 24;">
+
+            <!-- ─── Recherche d'actes ─── -->
+            <Tab text="📄  Recherche d'actes">
+                <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;">
+                    <VBox spacing="20">
+                        <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+                        <VBox spacing="3">
+                            <Label text="Recherche d'actes" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                            <Label text="Filtrez les actes administratifs par critères" style="-fx-font-size: 12px; -fx-text-fill: #718096;"/>
+                        </VBox>
+
+                        <!-- Formulaire recherche -->
+                        <VBox spacing="16" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3); -fx-padding: 24;">
+                            <HBox alignment="CENTER_LEFT" spacing="8">
+                                <Label text="🔍" style="-fx-font-size: 14px;"/>
+                                <Label text="Critères de recherche" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                            </HBox>
+                            <Separator style="-fx-background-color: #edf2f7;"/>
+
+                            <GridPane hgap="20" vgap="14">
+                                <columnConstraints>
+                                    <ColumnConstraints halignment="RIGHT" minWidth="120"/>
+                                    <ColumnConstraints minWidth="220"/>
+                                    <ColumnConstraints halignment="RIGHT" minWidth="120"/>
+                                    <ColumnConstraints minWidth="220"/>
+                                </columnConstraints>
+
+                                <Label text="Numéro acte :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                <TextField fx:id="rechercheNumeroField" style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                                <Label text="Type acte :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                                <ComboBox fx:id="rechercheTypeCombo" prefWidth="220" style="-fx-background-radius: 6;" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+                                <Label text="Nom usager :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                <TextField fx:id="rechercheNomField" style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                <Label text="Prénom usager :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                                <TextField fx:id="recherchePrenomField" style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+
+                                <Label text="Date du :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                                <DatePicker fx:id="rechercheDateDebut" style="-fx-background-radius: 6;" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                <Label text="Au :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                                <DatePicker fx:id="rechercheDateFin" style="-fx-background-radius: 6;" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+                            </GridPane>
+
+                            <HBox spacing="12">
+                                <Button onAction="#handleRechercherActes" text="🔍 Rechercher" style="-fx-background-color: #3182ce; -fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 9 20 9 20; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                                <Button onAction="#handleReset" text="↺ Réinitialiser" style="-fx-background-color: #718096; -fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 9 20 9 20; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                            </HBox>
+                        </VBox>
+
+                        <!-- Résultats -->
+                        <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);">
+                            <TableView fx:id="resultatActesTable" prefHeight="250" style="-fx-background-color: transparent;">
+                                <placeholder>
+                                    <Label text="Aucun résultat." style="-fx-text-fill: #a0aec0; -fx-font-size: 13px;"/>
+                                </placeholder>
+                                <columns>
+                                    <TableColumn fx:id="resNumeroCol" text="N° Acte"  prefWidth="130"/>
+                                    <TableColumn fx:id="resTypeCol"   text="Type"     prefWidth="130"/>
+                                    <TableColumn fx:id="resUsagerCol" text="Usager"   prefWidth="160"/>
+                                    <TableColumn fx:id="resDateCol"   text="Date"     prefWidth="120"/>
+                                    <TableColumn fx:id="resStatutCol" text="Statut"   prefWidth="100"/>
+                                </columns>
+                            </TableView>
+                        </VBox>
+
+                    </VBox>
+                </ScrollPane>
+            </Tab>
+
+            <!-- ─── Recherche de demandes ─── -->
+            <Tab text="📋  Recherche de demandes">
+                <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;">
+                    <VBox spacing="20">
+                        <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+                        <VBox spacing="3">
+                            <Label text="Recherche de demandes" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                            <Label text="Filtrez les demandes par critères" style="-fx-font-size: 12px; -fx-text-fill: #718096;"/>
+                        </VBox>
+
+                        <!-- Formulaire recherche -->
+                        <VBox spacing="16" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3); -fx-padding: 24;">
+                            <HBox alignment="CENTER_LEFT" spacing="8">
+                                <Label text="🔍" style="-fx-font-size: 14px;"/>
+                                <Label text="Critères de recherche" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                            </HBox>
+                            <Separator style="-fx-background-color: #edf2f7;"/>
+
+                            <GridPane hgap="20" vgap="14">
+                                <columnConstraints>
+                                    <ColumnConstraints halignment="RIGHT" minWidth="120"/>
+                                    <ColumnConstraints minWidth="220"/>
+                                    <ColumnConstraints halignment="RIGHT" minWidth="120"/>
+                                    <ColumnConstraints minWidth="220"/>
+                                </columnConstraints>
+
+                                <Label text="N° demande :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                <TextField fx:id="rechercheDemandeNumeroField" style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                                <Label text="Statut :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                                <ComboBox fx:id="rechercheDemandeStatutCombo" prefWidth="220" style="-fx-background-radius: 6;" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+                                <Label text="Nom usager :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                <TextField fx:id="rechercheDemandeNomField" style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                <Label text="Type acte :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                                <ComboBox fx:id="rechercheDemandeTypeCombo" prefWidth="220" style="-fx-background-radius: 6;" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+
+                                <Label text="Date du :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                                <DatePicker fx:id="rechercheDemandeDateDebut" style="-fx-background-radius: 6;" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                <Label text="Au :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                                <DatePicker fx:id="rechercheDemandeDateFin" style="-fx-background-radius: 6;" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+                            </GridPane>
+
+                            <HBox spacing="12">
+                                <Button onAction="#handleRechercherDemandes" text="🔍 Rechercher" style="-fx-background-color: #3182ce; -fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 9 20 9 20; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                                <Button onAction="#handleResetDemandes" text="↺ Réinitialiser" style="-fx-background-color: #718096; -fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 9 20 9 20; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                            </HBox>
+                        </VBox>
+
+                        <!-- Résultats -->
+                        <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);">
+                            <TableView fx:id="resultatDemandesTable" prefHeight="250" style="-fx-background-color: transparent;">
+                                <placeholder>
+                                    <Label text="Aucun résultat." style="-fx-text-fill: #a0aec0; -fx-font-size: 13px;"/>
+                                </placeholder>
+                                <columns>
+                                    <TableColumn fx:id="resDemNumeroCol" text="N° Demande" prefWidth="140"/>
+                                    <TableColumn fx:id="resDemTypeCol"   text="Type"       prefWidth="130"/>
+                                    <TableColumn fx:id="resDemUsagerCol" text="Usager"     prefWidth="160"/>
+                                    <TableColumn fx:id="resDemDateCol"   text="Date"       prefWidth="120"/>
+                                    <TableColumn fx:id="resDemStatutCol" text="Statut"     prefWidth="100"/>
+                                </columns>
+                            </TableView>
+                        </VBox>
+
+                    </VBox>
+                </ScrollPane>
+            </Tab>
+
+        </TabPane>
+    </center>
+
+</BorderPane>

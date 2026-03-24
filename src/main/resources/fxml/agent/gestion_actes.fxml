@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.agent.ActeController"
+            prefWidth="1024" prefHeight="768"
+            style="-fx-background-color: #f0f2f5;">
+
+    <top>
+        <VBox style="-fx-background-color: #1a2035; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0, 0, 2);">
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <padding><Insets top="14" right="24" bottom="14" left="24"/></padding>
+                <VBox spacing="2">
+                    <Label text="GESTION DES ACTES" textFill="white" style="-fx-font-weight: bold; -fx-font-size: 15px;"/>
+                    <Label text="Consultation et gestion des actes administratifs" textFill="#7986a8" style="-fx-font-size: 11px;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button onAction="#handleRetour" text="← Retour" style="-fx-background-color: #2d3748; -fx-text-fill: #a0aec0; -fx-font-size: 12px; -fx-padding: 7 16 7 16; -fx-background-radius: 6; -fx-cursor: hand;"/>
+            </HBox>
+            <HBox prefHeight="3" style="-fx-background-color: linear-gradient(to right, #3182ce, #805ad5, #e53e3e);"/>
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;">
+            <VBox spacing="20">
+                <padding><Insets top="24" right="28" bottom="24" left="28"/></padding>
+
+                <VBox spacing="3">
+                    <Label text="Actes administratifs" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                    <Label text="Recherchez, consultez et gérez les actes émis" style="-fx-font-size: 13px; -fx-text-fill: #718096;"/>
+                </VBox>
+
+                <!-- Filtres -->
+                <VBox spacing="12" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3); -fx-padding: 20;">
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label text="🔍" style="-fx-font-size: 14px;"/>
+                        <Label text="Recherche et filtres" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                    </HBox>
+                    <Separator style="-fx-background-color: #edf2f7;"/>
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <TextField fx:id="rechercheField" onAction="#handleRechercher" prefWidth="280" promptText="Numéro, usager, type..." style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 9; -fx-font-size: 13px;"/>
+                        <Button onAction="#handleRechercher" text="Rechercher" style="-fx-background-color: #3182ce; -fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 9 20 9 20; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                    </HBox>
+                    <HBox spacing="16" alignment="CENTER_LEFT">
+                        <Label text="Type :" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #4a5568;"/>
+                        <ComboBox fx:id="typeFiltreCombo" onAction="#handleFiltrer" prefWidth="160" style="-fx-background-radius: 6;"/>
+                        <Label text="Statut :" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #4a5568;"/>
+                        <ComboBox fx:id="statutFiltreCombo" onAction="#handleFiltrer" prefWidth="160" style="-fx-background-radius: 6;"/>
+                        <Label text="Du :" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #4a5568;"/>
+                        <DatePicker fx:id="dateDebutPicker" onAction="#handleFiltrer" style="-fx-background-radius: 6;"/>
+                        <Label text="Au :" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #4a5568;"/>
+                        <DatePicker fx:id="dateFinPicker" onAction="#handleFiltrer" style="-fx-background-radius: 6;"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Table -->
+                <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);">
+                    <TableView fx:id="acteTable" prefHeight="220" style="-fx-background-color: transparent;">
+                        <placeholder>
+                            <Label text="Aucun acte trouvé." style="-fx-text-fill: #a0aec0; -fx-font-size: 13px;"/>
+                        </placeholder>
+                        <columns>
+                            <TableColumn fx:id="numeroCol" text="N° Acte"  prefWidth="130"/>
+                            <TableColumn fx:id="typeCol"   text="Type"     prefWidth="140"/>
+                            <TableColumn fx:id="usagerCol" text="Usager"   prefWidth="160"/>
+                            <TableColumn fx:id="dateCol"   text="Date"     prefWidth="120"/>
+                            <TableColumn fx:id="statutCol" text="Statut"   prefWidth="100"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+                <!-- Détails acte -->
+                <VBox spacing="16" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3); -fx-padding: 24;">
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label text="📄" style="-fx-font-size: 16px;"/>
+                        <Label text="Détails de l'acte" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                    </HBox>
+                    <Separator style="-fx-background-color: #edf2f7;"/>
+
+                    <GridPane hgap="20" vgap="12">
+                        <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT" minWidth="120"/>
+                            <ColumnConstraints minWidth="200"/>
+                            <ColumnConstraints halignment="RIGHT" minWidth="120"/>
+                            <ColumnConstraints minWidth="200"/>
+                        </columnConstraints>
+
+                        <Label text="N° Acte :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <Label fx:id="numeroActeLabel" style="-fx-font-weight: bold; -fx-text-fill: #1a2035;" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                        <Label text="Type :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                        <Label fx:id="typeActeLabel" style="-fx-text-fill: #2d3748;" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+                        <Label text="Date émission :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                        <Label fx:id="dateEmissionLabel" style="-fx-text-fill: #2d3748;" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <Label text="Date validité :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                        <Label fx:id="dateValiditeLabel" style="-fx-text-fill: #2d3748;" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+
+                        <Label text="Statut :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                        <Label fx:id="statutActeLabel" style="-fx-text-fill: #2d3748;" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                        <Label text="Agent émetteur :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                        <Label fx:id="agentEmetteurLabel" style="-fx-text-fill: #2d3748;" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+
+                        <Label text="Usager :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                        <Label fx:id="usagerInfoLabel" wrapText="true" style="-fx-text-fill: #2d3748;" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="3"/>
+                    </GridPane>
+
+                    <VBox spacing="6">
+                        <Label text="Contenu de l'acte :" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #4a5568;"/>
+                        <TextArea fx:id="contenuActeArea" editable="false" prefHeight="100" wrapText="true" style="-fx-background-color: #f7fafc; -fx-border-color: #e2e8f0; -fx-border-radius: 6; -fx-background-radius: 6; -fx-font-size: 12px;"/>
+                    </VBox>
+
+                    <HBox spacing="12">
+                        <Button fx:id="visualiserButton" onAction="#handleVisualiser" text="👁 Visualiser" style="-fx-background-color: #3182ce; -fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 9 20 9 20; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                        <Button fx:id="imprimerButton" onAction="#handleImprimer" text="🖨 Imprimer" style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 9 20 9 20; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                        <Button fx:id="exporterButton" onAction="#handleExporter" text="📤 Exporter" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 9 20 9 20; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                        <Button fx:id="annulerButton" onAction="#handleAnnuler" text="❌ Annuler l'acte" style="-fx-background-color: #e53e3e; -fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 9 20 9 20; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                    </HBox>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

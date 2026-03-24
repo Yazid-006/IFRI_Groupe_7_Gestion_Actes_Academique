@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.usager.NouvelleDemandeController"
+            prefWidth="1024" prefHeight="768"
+            style="-fx-background-color: #f0f2f5;">
+
+    <!-- ═══ HEADER ═══ -->
+    <top>
+        <VBox style="-fx-background-color: #1a2035; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0, 0, 2);">
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <padding><Insets top="14" right="24" bottom="14" left="24"/></padding>
+                <VBox spacing="2">
+                    <Label text="NOUVELLE DEMANDE" textFill="white"
+                           style="-fx-font-weight: bold; -fx-font-size: 15px; -fx-letter-spacing: 1.5px;"/>
+                    <Label text="Formulaire de demande d'acte administratif" textFill="#7986a8"
+                           style="-fx-font-size: 11px;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button onAction="#handleRetour" text="← Retour"
+                        style="-fx-background-color: #2d3748; -fx-text-fill: #a0aec0;
+                               -fx-font-size: 12px; -fx-padding: 7 16 7 16;
+                               -fx-background-radius: 6; -fx-cursor: hand;"/>
+            </HBox>
+            <HBox prefHeight="3" style="-fx-background-color: linear-gradient(to right, #27ae60, #3182ce, #805ad5);"/>
+        </VBox>
+    </top>
+
+    <!-- ═══ CONTENU PRINCIPAL ═══ -->
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;">
+            <VBox spacing="24">
+                <padding><Insets top="32" right="36" bottom="32" left="36"/></padding>
+
+                <!-- Titre -->
+                <VBox spacing="4">
+                    <Label text="Formulaire de demande"
+                           style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                    <Label text="Remplissez les informations ci-dessous pour soumettre votre demande"
+                           style="-fx-font-size: 13px; -fx-text-fill: #718096;"/>
+                </VBox>
+
+                <!-- Formulaire -->
+                <VBox spacing="20" style="-fx-background-color: white; -fx-background-radius: 12;
+                                          -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+                                          -fx-padding: 28;">
+
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label text="✏️" style="-fx-font-size: 15px;"/>
+                        <Label text="Informations de la demande"
+                               style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                    </HBox>
+                    <Separator style="-fx-background-color: #edf2f7;"/>
+
+                    <GridPane hgap="20" vgap="16">
+                        <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT" minWidth="160"/>
+                            <ColumnConstraints minWidth="340"/>
+                        </columnConstraints>
+
+                        <Label text="Type d'acte :"
+                               style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #4a5568;"
+                               GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <ComboBox fx:id="typeDemandeCombo" prefWidth="340"
+                                  promptText="Sélectionnez un type d'acte"
+                                  style="-fx-background-radius: 6;"
+                                  GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                        <Label text="Motif de la demande :"
+                               style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #4a5568;"
+                               GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                        <TextArea fx:id="motifDemandeArea" prefHeight="130" wrapText="true"
+                                  promptText="Décrivez le motif de votre demande..."
+                                  style="-fx-background-color: #f7fafc; -fx-border-color: #e2e8f0;
+                                         -fx-border-radius: 6; -fx-background-radius: 6; -fx-font-size: 13px;"
+                                  GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                        <Label text="Pièces justificatives :"
+                               style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #4a5568;"
+                               GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                        <HBox spacing="12" alignment="CENTER_LEFT"
+                              GridPane.columnIndex="1" GridPane.rowIndex="2">
+                            <Button onAction="#handleAjouterJustificatif" text="📎  Ajouter un fichier"
+                                    style="-fx-background-color: #3182ce; -fx-text-fill: white;
+                                           -fx-font-size: 12px; -fx-font-weight: bold;
+                                           -fx-padding: 8 16 8 16; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                            <Label fx:id="fichierJustificatifLabel" text="Aucun fichier sélectionné"
+                                   style="-fx-font-size: 12px; -fx-text-fill: #a0aec0;"/>
+                        </HBox>
+                    </GridPane>
+                </VBox>
+
+                <!-- Actions -->
+                <HBox spacing="12">
+                    <Button onAction="#handleSoumettreDemande" text="✅  Soumettre la demande"
+                            style="-fx-background-color: #27ae60; -fx-text-fill: white;
+                                   -fx-font-size: 13px; -fx-font-weight: bold;
+                                   -fx-padding: 10 24 10 24; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                    <Button onAction="#handleAnnuler" text="✖  Annuler"
+                            style="-fx-background-color: #e53e3e; -fx-text-fill: white;
+                                   -fx-font-size: 13px; -fx-font-weight: bold;
+                                   -fx-padding: 10 24 10 24; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                </HBox>
+
+                <!-- Message de retour -->
+                <Label fx:id="infoCreationLabel" text=""
+                       style="-fx-font-size: 13px; -fx-text-fill: #27ae60; -fx-font-weight: bold;"/>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

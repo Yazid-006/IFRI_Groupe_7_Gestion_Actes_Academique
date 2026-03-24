@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.admin.UtilisateurController"
+            prefWidth="1024" prefHeight="768"
+            style="-fx-background-color: #f0f2f5;">
+
+    <!-- ═══ HEADER ═══ -->
+    <top>
+        <VBox style="-fx-background-color: #1a2035; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0, 0, 2);">
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <padding>
+                    <Insets top="14" right="24" bottom="14" left="24"/>
+                </padding>
+                <VBox spacing="2">
+                    <Label text="GESTION DES UTILISATEURS"
+                           textFill="white"
+                           style="-fx-font-weight: bold; -fx-font-size: 15px;"/>
+                    <Label text="Usagers et agents administratifs"
+                           textFill="#7986a8"
+                           style="-fx-font-size: 11px;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button onAction="#handleRetour"
+                        text="← Retour"
+                        style="-fx-background-color: #2d3748;
+                               -fx-text-fill: #a0aec0;
+                               -fx-font-size: 12px;
+                               -fx-padding: 7 16 7 16;
+                               -fx-background-radius: 6;
+                               -fx-cursor: hand;"/>
+            </HBox>
+            <HBox prefHeight="3" style="-fx-background-color: linear-gradient(to right, #3182ce, #805ad5, #e53e3e);"/>
+        </VBox>
+    </top>
+
+    <!-- ═══ CONTENU ═══ -->
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE"
+                 style="-fx-background-color: transparent; -fx-padding: 24;">
+
+            <!-- ─── Onglet Usagers ─── -->
+            <Tab text="👤  Usagers">
+                <ScrollPane fitToWidth="true"
+                            style="-fx-background: transparent; -fx-background-color: transparent;">
+                    <VBox spacing="20">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+
+                        <!-- Titre + actions -->
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <VBox spacing="3">
+                                <Label text="Liste des usagers"
+                                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                                <Label text="Gérez les comptes usagers du système"
+                                       style="-fx-font-size: 12px; -fx-text-fill: #718096;"/>
+                            </VBox>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button onAction="#handleNewUsager"
+                                    text="+ Nouveau"
+                                    style="-fx-background-color: #3182ce; -fx-text-fill: white;
+                                           -fx-font-size: 12px; -fx-font-weight: bold;
+                                           -fx-padding: 8 16 8 16; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                            <Button onAction="#handleSaveUsager"
+                                    text="💾 Enregistrer"
+                                    style="-fx-background-color: #27ae60; -fx-text-fill: white;
+                                           -fx-font-size: 12px; -fx-font-weight: bold;
+                                           -fx-padding: 8 16 8 16; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                            <Button onAction="#handleDeleteUsager"
+                                    text="🗑 Supprimer"
+                                    style="-fx-background-color: #e53e3e; -fx-text-fill: white;
+                                           -fx-font-size: 12px; -fx-font-weight: bold;
+                                           -fx-padding: 8 16 8 16; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                        </HBox>
+
+                        <!-- Table -->
+                        <VBox style="-fx-background-color: white; -fx-background-radius: 12;
+                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);">
+                            <TableView fx:id="usagerTable" prefHeight="220"
+                                       style="-fx-background-color: transparent; -fx-background-radius: 12;">
+                                <placeholder>
+                                    <Label text="Aucun usager enregistré."
+                                           style="-fx-text-fill: #a0aec0; -fx-font-size: 13px;"/>
+                                </placeholder>
+                                <columns>
+                                    <TableColumn fx:id="usagerIdCol"      text="ID"        prefWidth="60"/>
+                                    <TableColumn fx:id="usagerNumeroCol"  text="N° Usager" prefWidth="110"/>
+                                    <TableColumn fx:id="usagerNomCol"     text="Nom"       prefWidth="140"/>
+                                    <TableColumn fx:id="usagerPrenomCol"  text="Prénom"    prefWidth="140"/>
+                                    <TableColumn fx:id="usagerEmailCol"   text="Email"     prefWidth="220"/>
+                                </columns>
+                            </TableView>
+                        </VBox>
+
+                        <!-- Détails usager -->
+                        <TitledPane text="Détails de l'usager" expanded="true"
+                                    style="-fx-background-color: white; -fx-background-radius: 12;
+                                           -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);">
+                            <GridPane hgap="16" vgap="14">
+                                <padding>
+                                    <Insets top="16" right="16" bottom="16" left="16"/>
+                                </padding>
+                                <columnConstraints>
+                                    <ColumnConstraints halignment="RIGHT" minWidth="110"/>
+                                    <ColumnConstraints minWidth="200"/>
+                                    <ColumnConstraints halignment="RIGHT" minWidth="110"/>
+                                    <ColumnConstraints minWidth="200"/>
+                                </columnConstraints>
+
+                                <Label text="Nom :"       style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                <TextField fx:id="usagerNomField"    style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                                <Label text="Prénom :"    style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                                <TextField fx:id="usagerPrenomField" style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+                                <Label text="Email :"     style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                <TextField fx:id="usagerEmailField"  style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                                <Label text="Téléphone :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                                <TextField fx:id="usagerTelField"    style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+
+                                <Label text="Adresse :"   style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                                <TextField fx:id="usagerAdresseField" style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="3"/>
+
+                                <Label text="Date naissance :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                                <DatePicker fx:id="usagerDateNaissancePicker" style="-fx-background-radius: 6;" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                                <Label text="Pièce d'identité :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+                                <TextField fx:id="usagerPieceIdentiteField" style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+                            </GridPane>
+                        </TitledPane>
+
+                    </VBox>
+                </ScrollPane>
+            </Tab>
+
+            <!-- ─── Onglet Agents ─── -->
+            <Tab text="🧑‍💼  Agents">
+                <ScrollPane fitToWidth="true"
+                            style="-fx-background: transparent; -fx-background-color: transparent;">
+                    <VBox spacing="20">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+
+                        <!-- Titre + actions -->
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <VBox spacing="3">
+                                <Label text="Liste des agents"
+                                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1a2035;"/>
+                                <Label text="Gérez les comptes agents administratifs"
+                                       style="-fx-font-size: 12px; -fx-text-fill: #718096;"/>
+                            </VBox>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button onAction="#handleNewAgent"
+                                    text="+ Nouveau"
+                                    style="-fx-background-color: #3182ce; -fx-text-fill: white;
+                                           -fx-font-size: 12px; -fx-font-weight: bold;
+                                           -fx-padding: 8 16 8 16; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                            <Button onAction="#handleSaveAgent"
+                                    text="💾 Enregistrer"
+                                    style="-fx-background-color: #27ae60; -fx-text-fill: white;
+                                           -fx-font-size: 12px; -fx-font-weight: bold;
+                                           -fx-padding: 8 16 8 16; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                            <Button onAction="#handleDeleteAgent"
+                                    text="🗑 Supprimer"
+                                    style="-fx-background-color: #e53e3e; -fx-text-fill: white;
+                                           -fx-font-size: 12px; -fx-font-weight: bold;
+                                           -fx-padding: 8 16 8 16; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                        </HBox>
+
+                        <!-- Table -->
+                        <VBox style="-fx-background-color: white; -fx-background-radius: 12;
+                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);">
+                            <TableView fx:id="agentTable" prefHeight="200"
+                                       style="-fx-background-color: transparent; -fx-background-radius: 12;">
+                                <placeholder>
+                                    <Label text="Aucun agent enregistré."
+                                           style="-fx-text-fill: #a0aec0; -fx-font-size: 13px;"/>
+                                </placeholder>
+                                <columns>
+                                    <TableColumn fx:id="agentIdCol"        text="ID"         prefWidth="60"/>
+                                    <TableColumn fx:id="agentMatriculeCol" text="Matricule"   prefWidth="110"/>
+                                    <TableColumn fx:id="agentNomCol"       text="Nom"         prefWidth="130"/>
+                                    <TableColumn fx:id="agentPrenomCol"    text="Prénom"      prefWidth="130"/>
+                                    <TableColumn fx:id="agentServiceCol"   text="Service"     prefWidth="150"/>
+                                    <TableColumn fx:id="agentFonctionCol"  text="Fonction"    prefWidth="150"/>
+                                </columns>
+                            </TableView>
+                        </VBox>
+
+                        <!-- Détails agent -->
+                        <TitledPane text="Détails de l'agent" expanded="true"
+                                    style="-fx-background-color: white; -fx-background-radius: 12;
+                                           -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);">
+                            <GridPane hgap="16" vgap="14">
+                                <padding>
+                                    <Insets top="16" right="16" bottom="16" left="16"/>
+                                </padding>
+                                <columnConstraints>
+                                    <ColumnConstraints halignment="RIGHT" minWidth="110"/>
+                                    <ColumnConstraints minWidth="200"/>
+                                    <ColumnConstraints halignment="RIGHT" minWidth="110"/>
+                                    <ColumnConstraints minWidth="200"/>
+                                </columnConstraints>
+
+                                <Label text="Nom :"         style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                <TextField fx:id="agentNomField"      style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                                <Label text="Prénom :"      style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                                <TextField fx:id="agentPrenomField"   style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+                                <Label text="Email :"       style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                <TextField fx:id="agentEmailField"    style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                                <Label text="Téléphone :"   style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                                <TextField fx:id="agentTelField"      style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+
+                                <Label text="Matricule :"   style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                                <TextField fx:id="agentMatriculeField" style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                                <Label text="Service :"     style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                                <TextField fx:id="agentServiceField"  style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+
+                                <Label text="Fonction :"    style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                                <TextField fx:id="agentFonctionField" style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                                <Label text="Niveau accès :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+
+                                <Label text="Mot de passe :" style="-fx-text-fill: #4a5568; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                                <PasswordField fx:id="agentMotDePasseField" promptText="Laissez vide pour mot de passe par défaut"
+                                               style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e2e8f0; -fx-padding: 8;"
+                                               GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                                <ComboBox fx:id="agentNiveauAccesCombo" prefWidth="200"
+                                          style="-fx-background-radius: 6;"
+                                          GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+                            </GridPane>
+                        </TitledPane>
+
+                    </VBox>
+                </ScrollPane>
+            </Tab>
+
+        </TabPane>
+    </center>
+
+</BorderPane>
